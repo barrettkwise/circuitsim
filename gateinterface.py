@@ -27,25 +27,25 @@ class Gates():
         else:
             print("Gate not supported.")
 
-    def NOT(a) -> str:
+    def NOT(a: str) -> str:
         if a == "1":
             return "0"
         else:
             return "1"
 
-    def AND(a, b) -> str:
+    def AND(a: str , b: str) -> str:
         if a == "1" and b == "1":
             return "1"
         else:
             return "0"
 
-    def OR(a, b) -> str:
+    def OR(a: str , b: str) -> str:
         if a == "1" or b == "1":
             return "1"
         else:
             return "0"
 
-    def XOR(a, b) -> str:
+    def XOR(a: str , b: str) -> str:
         if a != b:
             return "1"
         else:
