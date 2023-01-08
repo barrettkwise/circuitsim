@@ -5,6 +5,6 @@ if __name__ == "__main__":
     parser = ps.CircuitParser("netlist.txt")
     lines = parser.show()
     for line in lines:
+        print(line)
         sim = s.Simulator(lines[line])
-        for i in sim.single():
-            print(i)
+        print(sim.single())
