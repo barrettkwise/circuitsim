@@ -7,7 +7,7 @@ class Simulator():
     
     def finder(self, target: str) -> object:
         for gate in self.gates:
-            if target in gate.out[0]:
+            if target == gate.out[0]:
                 return gate
 
     # simulates lines individually
