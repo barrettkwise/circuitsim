@@ -1,3 +1,4 @@
+#Converts file to dictionary
 class CircuitParser():
     def __init__(self, filepath: str):
         self.filepath = filepath
