@@ -1,3 +1,4 @@
+#Create gate object for each gate
 class GateObject():
     def __init__(self, line: list) -> None:
         self.type = line[0]
@@ -8,4 +9,3 @@ class GateObject():
         else:
             self.in2 = line[2]
             self.out = [line[3], None]
-        
