@@ -1,3 +1,4 @@
+#Stores gate logic
 class Gates():
     def __init__(self, gate: object):
         self.gate = gate
