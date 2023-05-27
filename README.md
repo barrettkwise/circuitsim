@@ -1,2 +1,2 @@
 # circuitsim
-Python package to simulate logic circuits (in progress)
+Python package to simulate logic circuits
