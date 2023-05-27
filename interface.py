@@ -1,26 +1,24 @@
 import parse as ps
 import simulator as s
 
-def convert_dict(d):
-    lists = [item for sublist in d.values() for item in sublist]
-    t = tuple(lists)
-    return t
 
 class Interface():
     def __init__(self, path: str):
         self.path = path
 
-    # Simulate each line seperately 
-    def single(self):
+    def show(self):
         parser = ps.CircuitParser(self.path)
         lines = parser.show()
-        for line in lines:
-            sim = s.Simulator(lines[line])
-            yield sim.simulate()
-    
-    # Simulate all lines together
-    def multiple(self):
-        parser = ps.CircuitParser(self.path)
-        lines = parser.show()
-        sim = s.Simulator(convert_dict(lines))
+        print(f"Circuit name: {parser.title}")
+        sim = s.Simulator(lines)
         return sim.simulate()
+
+
+i = Interface("src/example.txt")
+for c in i.show():
+    print(f"Gate type: {c.type}")
+    print(f"{c.in1.id}: {c.in1.value}")
+    if c.type != "NOT":
+        print(f"{c.in2.id}: {c.in2.value}")
+    print(f"{c.out.id}: {c.out.value}")
+    print("\n")

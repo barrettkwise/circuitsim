@@ -1,0 +1,15 @@
+#title
+!test
+
+#gates with initial inputs
+.line1: {
+    and, 0, 1, q
+    or, 0, 1, w
+}
+
+#can use binary numbers and variables 
+#for input on lines beyond the first one
+.line2: {
+    or, q, w, p
+    and, p, 1, o
+}

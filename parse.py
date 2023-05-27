@@ -1,7 +1,8 @@
-#Converts file to dictionary
+# Converts file to dictionary
 class CircuitParser():
     def __init__(self, filepath: str):
         self.filepath = filepath
+        self.title = ""
         self.circuit = {}
 
     def show(self):
@@ -12,6 +13,8 @@ class CircuitParser():
         with open(self.filepath, "r") as output:
             line_c = 1
             for num, line in enumerate(output.readlines(), 1):
+                if "!" in line:
+                    self.title = line[1:]
 
                 if f".line{line_c}" in line:
                     lines = []
