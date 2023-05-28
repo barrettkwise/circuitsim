@@ -11,7 +11,7 @@ class Gate():
         if self.priority == 0:
             self.in1 = GatePort("Priority 0 Input", line[1])
             if self.type == "NOT":
-                self.out = GatePort(line[2], eval("NOT")(self.in1.value))
+                self.out = GatePort(line[2], eval(self.type)(self.in1.value))
             else:
                 self.in2 = GatePort("Priority 0 Input", line[2])
                 self.out = GatePort(line[3], eval(self.type)(
