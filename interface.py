@@ -14,7 +14,7 @@ class Interface():
         return sim.simulate()
 
 
-i = Interface("src/example.txt")
+i = Interface("example.txt")
 for c in i.show():
     print(f"Gate type: {c.type}")
     print(f"{c.in1.id}: {c.in1.value}")
