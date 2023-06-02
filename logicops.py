@@ -1,3 +1,9 @@
+def safety_check(gate: str) -> bool:
+    if gate in operations:
+        return True
+    else:
+        return False
+
 def NOT(a: str) -> str:
     if a == "1":
         return "0"
@@ -36,3 +42,13 @@ def NOR(a: str, b: str) -> str:
 
 def XNOR(a: str, b: str) -> str:
     return NOT(XOR(a, b))
+
+operations = {
+    "NOT": NOT,
+    "AND": AND,
+    "OR": OR,
+    "XOR": XOR,
+    "NAND": NAND,
+    "NOR": NOR,
+    "XNOR": XNOR
+}

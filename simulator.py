@@ -13,8 +13,8 @@ class Simulator():
 
     def simulate(self):
         p_level = 0
-        while p_level < len(self.circuit):
-            # values and ids of previous line
+        for p_level in range(len(self.circuit)):
+            # values and ids of previous/initial line
             curr_ids = [
                 gate.out.id for gate in self.gates if gate.priority == p_level]
             curr_vals = [

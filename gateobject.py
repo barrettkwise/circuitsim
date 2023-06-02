@@ -6,7 +6,10 @@ from logicops import *
 class Gate():
     def __init__(self, priority: int, line: list) -> None:
         self.priority = priority
-        self.type = line[0].upper()
+        if safety_check(line[0].upper()):
+            self.type = line[0].upper()
+        else:
+            raise ValueError(f"Invalid gate type: {line[0]}")
 
         if self.priority == 0:
             self.in1 = GatePort("Priority 0 Input", line[1])
