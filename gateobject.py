@@ -1,9 +1,10 @@
 from logicops import *
 
+
 # Create gate object for each gate
 
 
-class Gate():
+class Gate:
     def __init__(self, priority: int, line: list) -> None:
         self.priority = priority
         if safety_check(line[0].upper()):
@@ -40,7 +41,7 @@ class Gate():
                 self.out = GatePort(line[3], "None")
 
 
-class GatePort():
-    def __init__(self, id: str, value: str) -> None:
-        self.id = id
+class GatePort:
+    def __init__(self, gid: str, value: str) -> None:
+        self.id = gid
         self.value = value

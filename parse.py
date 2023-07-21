@@ -1,5 +1,15 @@
 # Converts file to dictionary
-class CircuitParser():
+from io import FileIO
+
+
+class CircuitParser:
+    @staticmethod
+    def __skip(skips: int, file: FileIO):
+        for i in range(0, skips - 1):
+            file.readline()
+
+        return file
+
     def __init__(self, filepath: str):
         self.filepath = filepath
         self.title = ""
@@ -10,19 +20,19 @@ class CircuitParser():
         return self.circuit
 
     def parse(self):
-        with open(self.filepath, "r") as output:
+        with open(self.filepath, "r") as input:
             line_c = 1
-            for num, line in enumerate(output.readlines(), 1):
+            for num, line in enumerate(input.readlines(), 1):
                 if "!" in line:
                     self.title = line[1:]
 
                 if f".line{line_c}" in line:
                     lines = []
-                    output.seek(0)
-                    output = self.__skip(num+1, output)
+                    input.seek(0)
+                    input = CircuitParser.__skip(num + 1, input)
 
                     while True:
-                        line = output.readline()
+                        line = input.readline()
                         if "}" in line:
                             break
 
@@ -34,9 +44,3 @@ class CircuitParser():
 
                 else:
                     continue
-
-    def __skip(self, skips: int, file):
-        for i in range(0, skips-1):
-            file.readline()
-
-        return file

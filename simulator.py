@@ -1,8 +1,7 @@
 import gateobject as g
-from logicops import *
 
 
-class Simulator():
+class Simulator:
     def __init__(self, circuit: dict) -> None:
         self.circuit = circuit
         self.gates = []
