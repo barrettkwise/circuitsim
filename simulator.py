@@ -10,8 +10,7 @@ class Simulator:
             for gate in line:
                 self.gates.append(g.Gate(level, gate))
 
-    def simulate(self):
-        p_level = 0
+    def simulate(self) -> list:
         for p_level in range(len(self.circuit)):
             # values and ids of previous/initial line
             curr_ids = [

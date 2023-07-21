@@ -15,7 +15,7 @@ class Interface:
         else:
             self.output_path = None
 
-    def show(self):
+    def show(self) -> list:
         parser = ps.CircuitParser(self.path)
         lines = parser.show()
         print(f"Circuit name: {parser.title}")
