@@ -1,55 +1,66 @@
 import gateobject as g
+from logicops import *
 
 
 class Simulator:
     def __init__(self, circuit: dict) -> None:
         self.circuit = circuit
-        self.gates = []
+        if self.circuit is None:
+            self.gates = []
+        else:
+            self.gates = []
+            temp_gates = [gate for tup in circuit.values() for gate in tup]
+            if not all([isinstance(value, list) for value in temp_gates]):
+                self.gates = temp_gates
 
-        for level, line in enumerate(circuit.values(), 0):
-            for gate in line:
-                self.gates.append(g.Gate(level, gate))
+            else:
+                for level, line in enumerate(circuit.values(), start=0):
+                    for gate in line:
+                        self.gates.append(g.Gate(level, gate))
+
+    def __find_gate(self, output_id: str) -> g.Gate:
+        for gate in self.gates:
+            if gate.out.id == output_id:
+                return gate
 
     def simulate(self) -> list:
-        for p_level in range(len(self.circuit)):
-            # values and ids of previous/initial line
-            curr_ids = [
-                gate.out.id for gate in self.gates if gate.priority == p_level]
-            curr_vals = [
-                gate.out.value for gate in self.gates if gate.priority == p_level]
+        for p_level in range(1, len(self.circuit)):
+            gates_to_check = [gate for gate in self.gates if gate.priority == p_level]
 
-            # ids of current line
-            gates_to_check = [
-                gate for gate in self.gates if gate.priority == p_level + 1]
-            gate_ids_check = [
-                gate.out.id for gate in self.gates if gate.priority == p_level + 1]
+            for gate in gates_to_check:
+                # ids of gate outputs with simulated values
+                stored_ids = [
+                    gate.out.id for gate in self.gates if gate.out.value in ["0", "1"]
+                ]
+                curr_gate_index = self.gates.index(gate)
+                for iteration_count, pid in enumerate(stored_ids):
+                    if gate.in1.id == pid:
+                        gate.in1.value = self.__find_gate(pid).out.value
 
-            for gate_c, gate in enumerate(gates_to_check, 0):
-                gate_vals_check = [
-                    gate.out.value for gate in self.gates if gate.priority == p_level + 1]
-                if gate.in1.id in curr_ids:
-                    index = curr_ids.index(gate.in1.id)
-                    gate.in1.value = curr_vals[index]
+                    if gate.type != "NOT":
+                        if gate.in2.id == pid:
+                            gate.in2.value = self.__find_gate(pid).out.value
+                    else:
+                        if iteration_count == len(stored_ids) - 1:
+                            if gate.type == "NOT":
+                                gate.out.value = eval(gate.type)(gate.in1.value)
+                                self.gates[curr_gate_index] = gate
 
-                if gate_c != 0 and gate.in1.id in gate_ids_check:
-                    index = gate_ids_check.index(gate.in1.id)
-                    gate.in1.value = gate_vals_check[index]
+                            else:
+                                gate.out.value = eval(gate.type)(
+                                    gate.in1.value, gate.in2.value
+                                )
+                                self.gates[curr_gate_index] = gate
 
-                if gate.type != "NOT":
-                    if gate.in2.id in curr_ids:
-                        index = curr_ids.index(gate.in2.id)
-                        gate.in2.value = curr_vals[index]
+                        else:
+                            continue
 
-                    if gate_c != 0 and gate.in2.id in gate_ids_check:
-                        index = gate_ids_check.index(gate.in2.id)
-                        gate.in2.value = gate_vals_check[index]
+                    if gate.type == "NOT":
+                        gate.out.value = eval(gate.type)(gate.in1.value)
+                        self.gates[curr_gate_index] = gate
 
-                    gate.out.value = eval(gate.type)(
-                        gate.in1.value, gate.in2.value)
-
-                else:
-                    gate.out.value = eval(gate.type)(gate.in1.value)
-
-            p_level += 1
+                    else:
+                        gate.out.value = eval(gate.type)(gate.in1.value, gate.in2.value)
+                        self.gates[curr_gate_index] = gate
 
         return self.gates

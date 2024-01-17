@@ -1,44 +1,44 @@
 from logicops import *
 
 
-# Create gate object for each gate
-
-
 class Gate:
-    def __init__(self, priority: int, line: list) -> None:
+    def __init__(self, priority: int, gate_info: list) -> None:
         self.priority = priority
-        if safety_check(line[0].upper()):
-            self.type = line[0].upper()
+        if safety_check(gate_info[0].upper()):
+            self.type = gate_info[0].upper()
         else:
-            raise ValueError(f"Invalid gate type: {line[0]}")
+            raise ValueError(f"Invalid gate type: {gate_info[0]}")
 
         if self.priority == 0:
-            self.in1 = GatePort("Priority 0 Input", line[1])
+            self.in1 = GatePort("Priority 0 Input", gate_info[1])
             if self.type == "NOT":
-                self.out = GatePort(line[2], eval(self.type)(self.in1.value))
+                self.out = GatePort(gate_info[2], eval(self.type)(self.in1.value))
             else:
-                self.in2 = GatePort("Priority 0 Input", line[2])
-                self.out = GatePort(line[3], eval(self.type)(
-                    self.in1.value, self.in2.value))
+                self.in2 = GatePort("Priority 0 Input", gate_info[2])
+                self.out = GatePort(
+                    gate_info[3], eval(self.type)(self.in1.value, self.in2.value)
+                )
 
         else:
-            if line[1] == "0" or line[1] == "1":
+            if gate_info[1] == "0" or gate_info[1] == "1":
                 self.in1 = GatePort(
-                    f"Und. Priority {self.priority} Input", line[1])
+                    f"Und. Priority {self.priority} Input", gate_info[1]
+                )
             else:
-                self.in1 = GatePort(line[1], "None")
+                self.in1 = GatePort(gate_info[1], "None")
 
             if self.type == "NOT":
-                self.out = GatePort(line[2], "None")
+                self.out = GatePort(gate_info[2], "None")
 
             else:
-                if line[2] == "0" or line[2] == "1":
+                if gate_info[2] == "0" or gate_info[2] == "1":
                     self.in2 = GatePort(
-                        f"Und. Priority {self.priority} Input", line[2])
+                        f"Und. Priority {self.priority} Input", gate_info[2]
+                    )
                 else:
-                    self.in2 = GatePort(line[2], "None")
+                    self.in2 = GatePort(gate_info[2], "None")
 
-                self.out = GatePort(line[3], "None")
+                self.out = GatePort(gate_info[3], "None")
 
 
 class GatePort:

@@ -52,5 +52,5 @@ operations = {
     "XOR": XOR,
     "NAND": NAND,
     "NOR": NOR,
-    "XNOR": XNOR
+    "XNOR": XNOR,
 }

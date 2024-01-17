@@ -1,10 +1,11 @@
-#title
+#use ! to indicate the
+#name of the circuit
 !test
 
 #gates with initial inputs
 .line1: {
-    and, 0, 1, q
-    and, 0, 1, w
+    and, 1, 1, q
+    and, 1, 1, w
     not, 0, x
 }
 
@@ -13,4 +14,9 @@
 .line2: {
     or, q, w, p
     nand, p, x, o
+}
+
+.line3: {
+    xor, q, o, r
+    nor, r, x, s
 }
