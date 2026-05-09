@@ -1,0 +1,35 @@
+Circuit name: 
+Gate type: AND
+Priority 0 Input: 1
+Priority 0 Input: 1
+q: 1
+
+Gate type: AND
+Priority 0 Input: 1
+Priority 0 Input: 1
+w: 1
+
+Gate type: NOT
+Priority 0 Input: 0
+x: 1
+
+Gate type: OR
+q: 1
+w: 1
+p: 1
+
+Gate type: NAND
+p: 1
+x: 1
+o: 0
+
+Gate type: XOR
+q: 1
+o: 0
+r: 1
+
+Gate type: NOR
+r: 1
+x: 1
+s: 0
+
